@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>职业第二曲线定位测评 · 48题版</title>
+<style>
+:root{
+  --violet:#7C3AED; --violet-d:#5B21B6; --violet-l:#A78BFA;
+  --wash:#F6F2FF; --wash2:#EDE4FF; --card:#FFFFFF;
+  --ink:#2E1A5A; --ink2:#6B5B8B; --line:#E4DAFB;
+  --gold:#F59E0B; --ok:#16A34A; --warn:#DC2626;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;overflow-x:hidden;background:var(--wash)}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  color:var(--ink);line-height:1.65;font-size:16px}
+.wrap{max-width:480px;margin:0 auto;min-height:100vh;position:relative}
+.hidden{display:none!important}
+
+/* ---------- cover ---------- */
+.hero{background:linear-gradient(160deg,#8B5CF6 0%,#6D28D9 55%,#5B21B6 100%);
+  padding:34px 22px 40px;border-radius:0 0 30px 30px;color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;
+  background:rgba(255,255,255,.13);top:-70px;right:-70px}
+.hero::before{content:"";position:absolute;width:130px;height:130px;border-radius:50%;
+  background:rgba(255,255,255,.1);bottom:-40px;left:-30px}
+.badge{display:inline-block;background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);
+  padding:4px 12px;border-radius:999px;font-size:12.5px;letter-spacing:.5px;position:relative;z-index:2}
+.hero h1{margin:14px 0 6px;font-size:27px;line-height:1.3;position:relative;z-index:2;font-weight:800}
+.hero .sub{font-size:14px;opacity:.93;position:relative;z-index:2}
+.tags{margin-top:16px;display:flex;flex-wrap:wrap;gap:7px;position:relative;z-index:2}
+.tags span{background:rgba(255,255,255,.17);padding:5px 11px;border-radius:8px;font-size:12.5px}
+.stats{display:flex;gap:10px;margin:22px 0 0;position:relative;z-index:2}
+.stat{flex:1;background:rgba(255,255,255,.15);border-radius:14px;padding:11px 6px;text-align:center}
+.stat b{display:block;font-size:20px;font-weight:800}
+.stat i{font-style:normal;font-size:11.5px;opacity:.9}
+
+.card{background:var(--card);margin:16px 14px;border-radius:20px;padding:18px;
+  box-shadow:0 6px 22px rgba(109,40,217,.07);border:1px solid var(--line)}
+.card h2{margin:0 0 4px;font-size:18px;display:flex;align-items:center;gap:7px;font-weight:800}
+.card h3{margin:0 0 8px;font-size:15.5px;font-weight:800;color:var(--violet-d)}
+.note{font-size:13px;color:var(--ink2);margin:6px 0 0}
+.kv{display:flex;gap:10px;font-size:13.5px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+.kv b{color:var(--violet);flex:0 0 auto;font-weight:700}
+.kv b::after{content:"｜"}
+
+.btn{display:block;width:calc(100% - 28px);margin:6px 14px 22px;padding:16px;border:0;border-radius:16px;
+  background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:#fff;font-size:17px;font-weight:800;
+  box-shadow:0 10px 24px rgba(109,40,217,.32);cursor:pointer;letter-spacing:1px}
+.btn:active{transform:translateY(2px);box-shadow:0 5px 14px rgba(109,40,217,.3)}
+.btn.ghost{background:#fff;color:var(--violet-d);border:1.5px solid var(--violet-l);box-shadow:none;font-weight:700}
+.btn.mini{width:auto;display:inline-block;margin:0;padding:9px 18px;font-size:14.5px;letter-spacing:0}
+
+/* ---------- quiz ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(246,242,255,.96);backdrop-filter:blur(8px);
+  padding:12px 14px 10px;border-bottom:1px solid var(--line)}
+.toprow{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--ink2)}
+.toprow b{color:var(--violet-d);font-size:14px;font-weight:800}
+.mchip{background:var(--wash2);color:var(--violet-d);padding:3px 10px;border-radius:999px;font-weight:700;font-size:12px}
+.bar{height:7px;background:var(--wash2);border-radius:999px;margin-top:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#A78BFA,#6D28D9);border-radius:999px;
+  width:0;transition:width .35s ease}
+.qbody{padding:26px 18px 110px;min-height:60vh}
+.qno{font-size:13px;color:var(--violet);font-weight:800;letter-spacing:1px}
+.qfac{font-size:12px;color:var(--ink2);margin:2px 0 12px}
+.qtext{font-size:20px;font-weight:750;line-height:1.55;letter-spacing:.2px}
+.opts{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.opt{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-size:15.5px;
+  display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .18s}
+.opt i{font-style:normal;font-size:12.5px;color:var(--ink2)}
+.opt:active{transform:scale(.98)}
+.opt.on{border-color:var(--violet);background:linear-gradient(135deg,#F3E8FF,#EDE4FF);color:var(--violet-d);font-weight:750}
+.opt.on i{color:var(--violet-d)}
+.qnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;
+  display:flex;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(246,242,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:20}
+.qnav button{flex:1;margin:0}
+
+/* ---------- report ---------- */
+.rhead{background:linear-gradient(160deg,#8B5CF6,#5B21B6);color:#fff;padding:30px 20px 34px;
+  border-radius:0 0 30px 30px;text-align:center}
+.rhead .badge{background:rgba(255,255,255,.2)}
+.rhead h1{margin:12px 0 4px;font-size:25px;font-weight:800}
+.rhead p{margin:0;font-size:13.5px;opacity:.92}
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin:18px 14px 0}
+.chip{background:linear-gradient(135deg,#F3E8FF,#E9D5FF);border:1.5px solid var(--violet-l);color:var(--violet-d);
+  border-radius:14px;padding:11px 15px;text-align:center;flex:1;min-width:104px}
+.chip b{display:block;font-size:16.5px;font-weight:800}
+.chip span{font-size:11.5px;color:var(--ink2)}
+.radarbox{display:flex;justify-content:center;padding:6px 0 0}
+svg{max-width:100%;height:auto;display:block}
+.dimlist{margin-top:6px}
+.dimrow{display:flex;align-items:center;gap:9px;margin:9px 0;font-size:13.5px}
+.dimrow .dn{flex:0 0 40px;font-weight:750}
+.dimrow .track{flex:1;height:9px;background:var(--wash2);border-radius:999px;overflow:hidden}
+.dimrow .track i{display:block;height:100%;background:linear-gradient(90deg,#C4B5FD,#7C3AED);border-radius:999px;width:0;transition:width .8s ease}
+.dimrow .ds{flex:0 0 30px;text-align:right;font-weight:800;color:var(--violet-d)}
+.dimrow .db{flex:0 0 38px;text-align:center;font-size:11px;background:var(--wash);border-radius:6px;color:var(--ink2)}
+.gauge{margin:14px 0 4px;height:14px;border-radius:999px;display:flex;overflow:hidden;border:1px solid var(--line)}
+.gauge u{text-decoration:none;display:block;height:100%}
+.gmark{margin-top:8px;font-size:12.5px;color:var(--ink2)}
+.tagline{margin:12px 0 0;display:inline-block;background:var(--wash2);color:var(--violet-d);
+  padding:6px 13px;border-radius:999px;font-size:13px;font-weight:750}
+.track-card{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;background:#FDFCFF}
+.track-card .rk{display:inline-block;background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:#fff;
+  font-size:11.5px;padding:2px 9px;border-radius:6px;font-weight:750}
+.track-card h4{margin:9px 0 5px;font-size:16px;line-height:1.45}
+.track-card p{margin:4px 0;font-size:13.5px;color:var(--ink2)}
+.track-card p b{color:var(--ink);font-weight:700}
+.avoid-card{border-left:4px solid var(--gold);background:#FFFDF5;border-radius:0 12px 12px 0;
+  padding:12px 14px;margin-top:11px}
+.avoid-card em{font-style:normal;display:inline-block;background:#FEF3C7;color:#92400E;font-size:11px;
+  padding:2px 8px;border-radius:5px;font-weight:750;margin-left:6px}
+.avoid-card h4{margin:0 0 5px;font-size:15.5px}
+.avoid-card p{margin:3px 0;font-size:13px;color:var(--ink2)}
+.avoid-card .alt{color:var(--violet-d);font-weight:700}
+.safe{background:#F0FDF4;border:1.5px dashed #86EFAC;color:#166534;border-radius:14px;padding:14px;
+  font-size:14px;margin-top:12px}
+.act{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;background:#FDFCFF}
+.act .ty{font-size:11.5px;font-weight:800;color:#fff;background:var(--violet);padding:2px 9px;border-radius:6px}
+.act .ty.urg{background:var(--warn)}
+.act p{margin:8px 0 0;font-size:14.5px}
+.act .meta{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink2)}
+.act .meta b{color:var(--violet-d)}
+.disc{font-size:12px;color:var(--ink2);background:#FAF7FF;border-radius:14px;padding:14px;margin:16px 14px 30px;
+  border:1px solid var(--line);line-height:1.75}
+.disc b{color:var(--violet-d);display:block;margin-bottom:5px;font-size:12.5px}
+.hint{text-align:center;font-size:12.5px;color:var(--ink2);margin:-10px 0 18px}
+.spin{margin:60px auto 30px;width:38px;height:38px;border:3.5px solid var(--wash2);
+  border-top-color:var(--violet);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loading{text-align:center;font-size:14px;color:var(--violet-d)}
+@media (min-width:481px){.wrap{box-shadow:0 0 40px rgba(109,40,217,.13)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===== 封面 ===== -->
+<section id="screen-cover">
+  <div class="hero">
+    <span class="badge" id="c-badge"></span>
+    <h1 id="c-title"></h1>
+    <div class="sub" id="c-sub"></div>
+    <div class="tags" id="c-tags"></div>
+    <div class="stats">
+      <div class="stat"><b id="c-n1"></b><i>道题目</i></div>
+      <div class="stat"><b id="c-n2"></b><i>分钟答完</i></div>
+      <div class="stat"><b>8维</b><i>能力雷达</i></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🌟 这套题在测什么</h2>
+    <p class="note" id="c-theory"></p>
+    <div class="kv"><b>怎么作答</b><span id="c-scale"></span></div>
+    <div class="kv"><b>适合谁</b><span id="c-aud"></span></div>
+  </div>
+
+  <div class="card">
+    <h2>📝 答题前的小叮嘱</h2>
+    <p class="note" id="c-guide"></p>
+    <p class="note" style="margin-top:8px;color:var(--violet-d);font-weight:700">
+      💡 凭第一直觉点，别纠结。选完自动跳下一题，可以点「上一题」反悔。</p>
+  </div>
+
+  <div class="card">
+    <h2>🎁 答完你会拿到</h2>
+    <div class="tags" id="c-gets" style="margin-top:8px"></div>
+  </div>
+
+  <button class="btn" id="btn-start">开始测评 · 约 8 分钟 →</button>
+  <p class="hint" id="c-foot"></p>
+</section>
+
+<!-- ===== 答题 ===== -->
+<section id="screen-quiz" class="hidden">
+  <div class="topbar">
+    <div class="toprow"><b id="q-progress">1 / 48</b><span class="mchip" id="q-mod"></span></div>
+    <div class="bar"><i id="q-bar"></i></div>
+  </div>
+  <div class="qbody">
+    <div class="qno" id="q-index"></div>
+    <div class="qfac" id="q-fac"></div>
+    <div class="qtext" id="q-text"></div>
+    <div class="opts" id="q-opts"></div>
+  </div>
+  <div class="qnav">
+    <button class="btn ghost mini" id="btn-prev">← 上一题</button>
+    <button class="btn mini" id="btn-next" style="flex:1">下一题 →</button>
+  </div>
+</section>
+
+<!-- ===== 计算中 ===== -->
+<section id="screen-loading" class="hidden">
+  <div class="loading"><div class="spin"></div>正在生成你的定位报告…</div>
+</section>
+
+<!-- ===== 报告 ===== -->
+<section id="screen-report" class="hidden">
+  <div class="rhead">
+    <span class="badge">你的专属报告</span>
+    <h1 id="r-title"></h1>
+    <p id="r-sub"></p>
+  </div>
+
+  <div class="chips" id="r-keywords"></div>
+
+  <div class="card">
+    <h2>🕸 8 维能力雷达</h2>
+    <p class="note">分数为 0–100 标准分，看形状比看单个数字更有用</p>
+    <div class="radarbox" id="r-radar"></div>
+    <div class="dimlist" id="r-dims"></div>
+  </div>
+
+  <div class="card">
+    <h2>🤖 AI 替代暴露度</h2>
+    <div class="radarbox"><div style="width:100%">
+      <div style="font-size:32px;font-weight:800;color:var(--violet-d);line-height:1.2">
+        <span id="r-expo">0</span><span style="font-size:14px;color:var(--ink2)"> / 100</span></div>
+      <div class="gauge" id="r-gauge"></div>
+      <div class="gmark" id="r-gmark"></div>
+    </div></div>
+    <p class="tagline" id="r-expo-tag"></p>
+    <p class="note" id="r-expo-text" style="margin-top:10px"></p>
+    <p class="note" style="color:var(--violet-d);font-weight:700" id="r-expo-act"></p>
+  </div>
+
+  <div class="card">
+    <h2>🚀 适配赛道 Top3</h2>
+    <p class="note" id="r-track-note">按你的雷达优势组合匹配</p>
+    <div id="r-tracks"></div>
+    <p class="note" id="r-holland" style="margin-top:12px"></p>
+  </div>
+
+  <div class="card">
+    <h2>⛔ 现阶段不建议</h2>
+    <p class="note">不是「你不行」，是这个方向此刻性价比低</p>
+    <div id="r-avoid"></div>
+  </div>
+
+  <div class="card">
+    <h2>✅ 90 天最小行动清单</h2>
+    <p class="note">围绕你最突出的优势展开，三条就够</p>
+    <div id="r-actions"></div>
+    <p class="note" id="r-hook" style="margin-top:12px;color:var(--violet-d);font-weight:700"></p>
+  </div>
+
+  <div class="card">
+    <h2>🔁 什么时候再测一次</h2>
+    <p class="note" id="r-retest"></p>
+  </div>
+
+  <button class="btn" id="btn-restart">再测一次 ↺</button>
+  <p class="hint">截图存下来，30 天后回看会很有意思 📸</p>
+
+  <div class="disc" id="r-disc"></div>
+</section>
+
+</div>
+<script>
+var DB = {"questions":[{"id":"A01","module":"A 职业兴趣","sub":"R 现实型","text":"我喜欢动手把一个具体的东西做出来、修好或调试好（组装、修理、做实物之类）。","dir":"正向","dim":"执行","expo":""},{"id":"A02","module":"A 职业兴趣","sub":"R 现实型","text":"遇到问题时，我更愿意亲自上手操作验证，而不是先开会讨论方案。","dir":"正向","dim":"执行","expo":""},{"id":"A03","module":"A 职业兴趣","sub":"I 研究型","text":"一个说法如果没有数据或原理支撑，我会忍不住去查证，而不是直接接受。","dir":"正向","dim":"分析","expo":""},{"id":"A04","module":"A 职业兴趣","sub":"I 研究型","text":"遇到没弄明白的问题，我会“不搞清楚就不舒服”，愿意花时间钻研。","dir":"正向","dim":"学习","expo":""},{"id":"A05","module":"A 职业兴趣","sub":"A 艺术型","text":"我经常对现有的做事方式冒出“能不能换个做法”的念头。","dir":"正向","dim":"创造","expo":""},{"id":"A06","module":"A 职业兴趣","sub":"A 艺术型","text":"排版、配色、措辞这类“表达上的细节”，我会不自觉地挑剔。","dir":"正向","dim":"创造","expo":""},{"id":"A07","module":"A 职业兴趣","sub":"S 社会型","text":"朋友遇到烦心事，往往是他们先来找我，我也愿意听。","dir":"正向","dim":"连接","expo":""},{"id":"A08","module":"A 职业兴趣","sub":"S 社会型","text":"帮别人把问题理顺后，我获得的满足感不比自己完成一件事少。","dir":"正向","dim":"连接","expo":""},{"id":"A09","module":"A 职业兴趣","sub":"E 企业型","text":"在有不确定性的情况下，我愿意拍板做决定并承担后果。","dir":"正向","dim":"影响","expo":""},{"id":"A10","module":"A 职业兴趣","sub":"E 企业型","text":"我能比较自然地说服别人接受一个方案或加入一件事。","dir":"正向","dim":"影响","expo":""},{"id":"A11","module":"A 职业兴趣","sub":"C 常规型","text":"把一堆混乱的信息整理成结构清晰的表格或流程，会让我觉得痛快。","dir":"正向","dim":"稳定","expo":""},{"id":"A12","module":"A 职业兴趣","sub":"C 常规型","text":"做重复但规则明确的事，我反而不容易出错、也不太烦。","dir":"正向","dim":"稳定","expo":""},{"id":"B01","module":"B 优势才干","sub":"执行","text":"交到我手里的任务，别人基本不用担心我拖延或掉链子。","dir":"正向","dim":"执行","expo":""},{"id":"B02","module":"B 优势才干","sub":"执行","text":"我习惯把大目标拆解成一步步可落地的动作，并按节奏推进。","dir":"正向","dim":"执行","expo":""},{"id":"B03","module":"B 优势才干","sub":"执行","text":"我做事常常三分钟热度，开始容易坚持难。","dir":"反向","dim":"执行","expo":""},{"id":"B04","module":"B 优势才干","sub":"分析","text":"面对复杂问题，我会先拆结构、找变量，而不是凭感觉下结论。","dir":"正向","dim":"分析","expo":""},{"id":"B05","module":"B 优势才干","sub":"分析","text":"别人给我一大堆信息，我能比较快地抓住关键矛盾。","dir":"正向","dim":"分析","expo":""},{"id":"B06","module":"B 优势才干","sub":"分析","text":"比起推理分析，我更依赖直觉和经验做判断。","dir":"反向","dim":"分析","expo":""},{"id":"B07","module":"B 优势才干","sub":"创造","text":"我脑子里经常同时装着几个想法，并且愿意拿出来试。","dir":"正向","dim":"创造","expo":""},{"id":"B08","module":"B 优势才干","sub":"创造","text":"别人卡住的问题，我常常能想到一个没人提过的切入点。","dir":"正向","dim":"创造","expo":""},{"id":"B09","module":"B 优势才干","sub":"影响","text":"在一群人里，我的意见容易被听见、被采纳。","dir":"正向","dim":"影响","expo":""},{"id":"B10","module":"B 优势才干","sub":"影响","text":"该要资源、要机会的时候，我敢开口，而不是等着被注意到。","dir":"正向","dim":"影响","expo":""},{"id":"B11","module":"B 优势才干","sub":"连接","text":"我能在性格不同的人之间穿针引线，让大家配合起来。","dir":"正向","dim":"连接","expo":""},{"id":"B12","module":"B 优势才干","sub":"连接","text":"维护人脉这件事让我觉得累，能少应酬就少应酬。","dir":"反向","dim":"连接","expo":""},{"id":"C01","module":"C 人格倾向","sub":"外向性","text":"参加一整天多人活动后，我是越待越有劲，而不是被掏空。","dir":"正向","dim":"影响","expo":""},{"id":"C02","module":"C 人格倾向","sub":"外向性","text":"我会主动发起谈话或邀约，而不是等别人先来。","dir":"正向","dim":"连接","expo":""},{"id":"C03","module":"C 人格倾向","sub":"外向性","text":"周末我更愿意一个人安静待着，社交越多越累。","dir":"反向","dim":"影响","expo":""},{"id":"C04","module":"C 人格倾向","sub":"尽责性","text":"我的待办清单或日程，完成率常年比较高。","dir":"正向","dim":"稳定","expo":""},{"id":"C05","module":"C 人格倾向","sub":"尽责性","text":"就算没人检查，我也会把事情做到自己认的那个标准。","dir":"正向","dim":"执行","expo":""},{"id":"C06","module":"C 人格倾向","sub":"尽责性","text":"我的桌面、文件、相册经常处于“先堆着再说”的状态。","dir":"反向","dim":"稳定","expo":""},{"id":"C07","module":"C 人格倾向","sub":"宜人性","text":"别人给我提意见，我的第一反应是想想有没有道理，而不是觉得被冒犯。","dir":"正向","dim":"韧性","expo":""},{"id":"C08","module":"C 人格倾向","sub":"宜人性","text":"合作中我愿意吃点小亏，换取事情顺利推进。","dir":"正向","dim":"连接","expo":""},{"id":"C09","module":"C 人格倾向","sub":"情绪稳定性","text":"任务出现意外状况时，我能较快稳住情绪去找办法。","dir":"正向","dim":"韧性","expo":""},{"id":"C10","module":"C 人格倾向","sub":"情绪稳定性","text":"我常在夜里反复回想白天说错的话、做错的事。","dir":"反向","dim":"韧性","expo":""},{"id":"C11","module":"C 人格倾向","sub":"开放性","text":"对没接触过的领域、工具、方法，我有持续的胃口。","dir":"正向","dim":"学习","expo":""},{"id":"C12","module":"C 人格倾向","sub":"开放性","text":"生活方式和习惯一旦定型，我其实不太想改。","dir":"反向","dim":"学习","expo":""},{"id":"D01","module":"D 暴露度","sub":"任务结构化","text":"我日常工作的大部分内容有明确步骤和标准做法可循。","dir":"正向","dim":"AI暴露度","expo":"任务结构化"},{"id":"D02","module":"D 暴露度","sub":"任务结构化","text":"换一个受过训练的新人接手我的主要工作，三个月内大致也能上手。","dir":"正向","dim":"AI暴露度","expo":"任务结构化"},{"id":"D03","module":"D 暴露度","sub":"任务结构化","text":"我的产出大多是按固定模板或流程批量生成的。","dir":"正向","dim":"AI暴露度","expo":"任务结构化"},{"id":"D04","module":"D 暴露度","sub":"创造性依赖","text":"我的工作里经常要产出“以前不存在”的方案或作品。","dir":"反向","dim":"AI暴露度","expo":"创造性依赖"},{"id":"D05","module":"D 暴露度","sub":"创造性依赖","text":"遇到没先例的问题，我需要自己发明解法，而不是套现成的。","dir":"反向","dim":"AI暴露度","expo":"创造性依赖"},{"id":"D06","module":"D 暴露度","sub":"创造性依赖","text":"客户或领导找我，往往是因为我能给出不一样的想法。","dir":"反向","dim":"AI暴露度","expo":"创造性依赖"},{"id":"D07","module":"D 暴露度","sub":"人际信任依赖","text":"我的工作需要长期维系特定的人对我的信任。","dir":"反向","dim":"AI暴露度","expo":"人际信任依赖"},{"id":"D08","module":"D 暴露度","sub":"人际信任依赖","text":"很多事必须当面或实时沟通才能推进，纯线上交接替代不了。","dir":"反向","dim":"AI暴露度","expo":"人际信任依赖"},{"id":"D09","module":"D 暴露度","sub":"人际信任依赖","text":"别人愿意为我的判断付费，很大程度上是认我这个人。","dir":"反向","dim":"AI暴露度","expo":"人际信任依赖"},{"id":"D10","module":"D 暴露度","sub":"工具驾驭","text":"我已经把 AI 或新的数字工具实际用进了日常工作流程。","dir":"反向","dim":"AI暴露度","expo":"工具驾驭"},{"id":"D11","module":"D 暴露度","sub":"工具驾驭","text":"学一个新工具或新系统，我上手比较快。","dir":"反向","dim":"AI暴露度","expo":"工具驾驭"},{"id":"D12","module":"D 暴露度","sub":"工具驾驭","text":"面对新工具，我的习惯是先观望，等别人把坑趟完再说。","dir":"正向","dim":"AI暴露度","expo":"工具驾驭"}],"dimNames":["执行","分析","创造","影响","连接","学习","稳定","韧性"],"bands":[{"name":"低","lo":0,"hi":24},{"name":"中低","lo":25,"hi":44},{"name":"中等","lo":45,"hi":64},{"name":"中高","lo":65,"hi":84},{"name":"高","lo":85,"hi":100}],"expoLevels":[{"label":"低","lo":0,"hi":24,"tag":"护城河型","text":"你的工作里含较高的人际信任、创造性或人格溢价成分，AI 短期内难以标准化替代，护城河较深。","action":"优先把手艺做深，不必为转型焦虑"},{"label":"中低","lo":25,"hi":49,"tag":"稳定型","text":"你的替代暴露处于可控区间，但部分环节已可被工具接管，需要保持工具驾驭习惯。","action":"每季度自查一次工作结构"},{"label":"中高","lo":50,"hi":69,"tag":"警示型","text":"你日常工作的相当比例是结构化、可交接的内容，AI 正在压缩这类岗位的时间窗口。","action":"90 天内启动“降暴露”动作（见行动清单）"},{"label":"高","lo":70,"hi":100,"tag":"转型紧迫型","text":"你的工作高度结构化、可标准化，继续深耕该形态的风险正在快速累积，建议尽快重新定位。","action":"优先考虑含人际/创造/复杂判断属性的新赛道"}],"keywords":{"执行":"靠谱交付、落地机器、说到做到","分析":"结构化思考、一眼抓关键","创造":"点子密度高、破局视角","影响":"有话语权、敢谈条件","连接":"穿针引线、关系资产","学习":"上手快、知识面宽","稳定":"秩序感强、低差错","韧性":"情绪复位快、耐高压"},"oneLine":{"执行":"把承诺变成结果的能力","分析":"把混乱拆成因果的能力","创造":"给出“以前不存在”的解法","影响":"让资源向你聚拢的能力","连接":"让人愿意与你绑定的能力","学习":"把新东西变成自己东西的速度","稳定":"让确定性兜住质量的能力","韧性":"从挫折里站起来的速度"},"tracks":[{"main":"执行","sub":"稳定","top3":"项目管理 / 运营统筹 / 供应链与质量管理","jobs":"项目经理、运营经理、供应链专员、QA","reason":"交付确定性强且规则密度高，与你的组合天然同构","prereq":"执行≥65 且 稳定≥65"},{"main":"执行","sub":"分析","top3":"数据运营 / 财务 BP / 风控执行","jobs":"数据运营、财务分析、风控专员","reason":"既能量化又能落地，是“会算数的交付者”","prereq":"执行≥65 且 分析≥60"},{"main":"执行","sub":"影响","top3":"电商操盘 / 渠道与门店管理","jobs":"电商运营主管、渠道经理、门店店长","reason":"带目标打仗且能落地复盘的组合","prereq":"执行≥65 且 影响≥60"},{"main":"分析","sub":"学习","top3":"行业研究 / 策略分析 / 技术咨询","jobs":"行业研究员、策略分析师、解决方案顾问","reason":"靠认知深度吃饭，越积累越值钱","prereq":"分析≥65 且 学习≥60"},{"main":"分析","sub":"创造","top3":"产品策略 / 用户体验研究","jobs":"产品经理（策略向）、用研、增长分析","reason":"能从数据里长出方案的人不多","prereq":"分析≥60 且 创造≥60"},{"main":"创造","sub":"学习","top3":"内容创作 / 产品设计 / 品牌内容","jobs":"内容主笔、新媒体策划、品牌内容经理","reason":"想法密度＋新鲜输入＝内容供给侧优势","prereq":"创造≥65 且 学习≥60"},{"main":"创造","sub":"影响","top3":"增长操盘 / IP 与直播运营 / 营销策划","jobs":"增长负责人、IP 操盘手、营销策划","reason":"有想法且能撬动资源与注意力","prereq":"创造≥65 且 影响≥60"},{"main":"影响","sub":"连接","top3":"大客户销售 / BD / 团队管理 / HRBP","jobs":"大客户经理、BD 总监、团队负责人、HRBP","reason":"关系资产＋话语权，天然带队与成交","prereq":"影响≥65 且 连接≥60"},{"main":"连接","sub":"韧性","top3":"用户成功 / 客户服务管理 / 教育服务","jobs":"用户成功经理、客服负责人、教育顾问","reason":"高情绪劳动场景里你比大多数人耐用","prereq":"连接≥65 且 韧性≥60"},{"main":"连接","sub":"学习","top3":"培训 / 知识服务运营 / 社群运营","jobs":"培训师、课程运营、社群负责人","reason":"能把人聚起来且持续供给新内容","prereq":"连接≥60 且 学习≥60"},{"main":"稳定","sub":"分析","top3":"财务 / 合规 / 审计","jobs":"财务主管、合规专员、审计","reason":"秩序＋严谨双高，低差错率就是护城河","prereq":"稳定≥65 且 分析≥60"},{"main":"韧性","sub":"执行","top3":"售后负责人 / 驻场交付 / 客服管理","jobs":"售后主管、驻场工程师、交付经理","reason":"高压环境里还能持续交付的人稀缺","prereq":"韧性≥60 且 执行≥65"}],"holland":{"R":"实地技术交付","I":"研究策略","A":"内容设计","S":"服务助人","E":"开拓管理","C":"流程规范"},"avoid":[{"idx":1,"cond":"影响≤25 且 连接≤44","dir":"陌生开拓型销售 / BD","reason":"关系杠杆不足，高压挫败会加速内耗","alt":"先做存量客户运营，或转用户成功方向","prio":"高"},{"idx":2,"cond":"创造≤25","dir":"从 0 到 1 的内容创业 / 独立主理人","reason":"供给端想象力不足，内容创业对点子密度要求极高","alt":"可先做执行/运营侧内容岗位积累","prio":"高"},{"idx":3,"cond":"执行≤25","dir":"高强度项目制乙方交付","reason":"交付节奏跟不上会直接伤口碑与续约","alt":"选节奏可控的甲方岗或长周期项目","prio":"中"},{"idx":4,"cond":"分析≤25 且 暴露度≥70","dir":"纯信息处理型操作岗（双重预警）","reason":"认知分析弱＋可标准化高＝替代风险叠加","alt":"优先转向带人际或现场属性的岗位","prio":"最高"},{"idx":5,"cond":"韧性≤25","dir":"早期创业团队 / 投行式高压节奏","reason":"情绪复位慢的人在持续高压里消耗极大","alt":"先修复情绪带宽，再考虑高强度赛道","prio":"中"},{"idx":6,"cond":"稳定≤25","dir":"强流程强合规岗（审计/质量/合规）","reason":"秩序感不足在高规范环境里是硬伤","alt":"选容错率更高的增长型业务","prio":"低"},{"idx":7,"cond":"暴露度≥70","dir":"未来 3 年继续深耕可被 AI 标准化的纯操作岗","reason":"替代窗口正在收窄","alt":"90 天内完成“降暴露”动作（见 07 表）","prio":"高"},{"idx":8,"cond":"暴露度≤24 且 执行≥65","dir":"仓促转纯管理岗","reason":"手艺型护城河正在增值，纯管理反而稀释","alt":"走专家序列＋带 1–2 人小团队","prio":"中"}],"dim2letter":{"创造":"A","连接":"B","分析":"C","执行":"D","影响":"E","稳定":"F","学习":"G","韧性":"H"},"actions":{"A":[{"type":"验证优势","content":"30 天内产出 3 个完整作品（按你的主攻方向）并公开发布，收集数据","evidence":"3 个作品＋数据截图","std":"任一作品互动/转化进入同题材前 20% 即继续加码"},{"type":"降暴露","content":"把当前工作中 2 个最标准化的环节交给 AI 工具跑通，沉淀成个人 SOP","evidence":"SOP 文档 1 份","std":"2 周内未跑通则请教 1 位同行后重试"},{"type":"建立证据","content":"整理过往代表作成“作品集一页纸”，投递 3 个目标岗位/合作方","evidence":"一页纸＋3 次投递记录","std":"至少 1 个正面回复"}],"B":[{"type":"验证优势","content":"主动组织 1 次跨部门/跨圈层的协作（内推、牵线、共创皆可）","evidence":"协作成果＋参与人反馈","std":"事后有 ≥2 人主动找你二次合作"},{"type":"降暴露","content":"把最耗时的沟通协调环节模板化（话术、流程、跟进表）","evidence":"沟通模板 1 套","std":"单次协调耗时下降 30%"},{"type":"建立证据","content":"列一份“关系资产负债表”：谁因你受益、你能为谁背书","evidence":"清单 1 份＋3 次有效引荐","std":"完成 3 次双向有价值的引荐"}],"C":[{"type":"验证优势","content":"完成 1 份目标行业的研究简报并公开发布","evidence":"简报 1 份＋传播数据","std":"获得 ≥1 次同行引用或转载"},{"type":"降暴露（紧迫）","content":"将日常数据清洗/报表环节全面 AI 化，每周记录节省工时","evidence":"工具链＋工时记录表","std":"8 周累计节省 ≥20 小时"},{"type":"建立证据","content":"把分析结论做成 3 次内部分享/公开分享","evidence":"分享材料＋反馈记录","std":"≥1 次分享带来新的项目机会"}],"D":[{"type":"验证优势","content":"主动认领 1 个跨部门小项目并完整交付","evidence":"交付物＋复盘记录","std":"按时交付且获得正面评价"},{"type":"降暴露","content":"用自动化工具替代 3 项重复流程","evidence":"自动化脚本/工具清单","std":"每周节省 ≥3 小时"},{"type":"建立证据","content":"沉淀 1 份项目管理复盘文档（可复用方法论）","evidence":"复盘文档 1 份","std":"被 ≥1 位同事/上级采纳复用"}],"E":[{"type":"验证优势","content":"主导 1 次对外提案、谈判或向上汇报","evidence":"提案材料＋结果记录","std":"争取到 1 项此前没有的资源/授权"},{"type":"降暴露","content":"把“开口要”变成制度化：建立资源申请与追踪机制","evidence":"机制文档 1 份","std":"季度内资源获取效率可量化提升"},{"type":"建立证据","content":"收集 3 条来自合作方/上级的具体正面评价","evidence":"评价记录 3 条","std":"评价可写入简历/晋升材料"}],"F":[{"type":"验证优势","content":"在当前岗位建立 1 套可复用流程并推行","evidence":"流程文档＋推行记录","std":"被团队采用并降低差错率"},{"type":"降暴露","content":"识别工作中 3 个最易出错的环节并建立检查清单","evidence":"检查清单 1 套","std":"返工率下降 ≥50%"},{"type":"建立证据","content":"考取 1 项与目标赛道相关的行业认证","evidence":"证书 1 项","std":"一次通过（未过则复盘再考一次）"}],"G":[{"type":"验证优势","content":"60 天内把 1 个新工具学到能教别人的程度并输出教程","evidence":"教程 1 份","std":"教程获得 ≥10 次收藏/转发"},{"type":"降暴露","content":"每周固定 2 小时“新工具试用时间”，记录心得","evidence":"试用记录 ≥8 条","std":"至少 1 个工具进入你的工作流"},{"type":"建立证据","content":"做 1 场内部/公开的新工具分享","evidence":"分享材料 1 份","std":"被邀请做第 2 场"}],"H":[{"type":"验证优势","content":"主动进入 1 个高压短期项目并完整走完","evidence":"项目结果＋状态记录","std":"全程未出现情绪失控/请假逃避"},{"type":"降暴露","content":"建立个人“情绪复位”工具箱（运动/书写/求助路径）","evidence":"工具箱文档 1 份","std":"负面情绪滞留时间可感知缩短"},{"type":"建立证据","content":"记录 1 次“从挫折中恢复”的完整案例","evidence":"案例文档 1 份","std":"可复述方法论且他人可借鉴"}]},"meta":{"name":"职业第二曲线定位测评（Career Second-Curve Locator）","ver":"V1.0（2026-11-10）","verShort":"V1.0","theory":"四层叠加：霍兰德职业兴趣（RIASEC）＋优势才干四因子＋大五人格精简＋自研 AI 替代暴露度","scale":"5 点李克特：1=非常不符合 2=不符合 3=不确定 4=符合 5=非常符合","guide":"请根据你最近 6–12 个月的真实状态作答，而不是你希望成为的样子。没有对错之分，第一直觉往往最准。","aud":"25–40 岁在职人群（P0）、应届求职党（P1 季节版）、35+ 转型中层（P2）","timeShort":"8–10","reportSeven":["优势关键词 3 个（标准分最高 3 个维度的关键词）","8 维雷达图（执行/分析/创造/影响/连接/学习/稳定/韧性）","AI 替代暴露度指数（0–100）与四级风险标签","适配赛道 Top3（含具体岗位举例与推荐理由）","现阶段不建议的赛道与原因（差异化核心项，最多 3 条）","90 天最小行动清单（3 条：验证优势 / 降暴露 / 建立证据）","重测建议（下次换岗、跳槽或年底复盘时复测对比）"],"pipeline":"反向题换算（6−x）→ 雷达维度合成 → 标准分（0–100）→ 五档 → 赛道映射 → 生成报告","disclaimer":"本工具提供自我认知与职业探索的参考视角，不构成医疗诊断、心理治疗，也不构成职业决策的唯一依据；重大职业决策请结合专业咨询。","toneRule":"题干与报告不使用“治愈/诊断/预测/注定”类表述；不用“你不适合”，统一用“现阶段不建议”。","retest":"重测建议（下次换岗、跳槽或年底复盘时复测对比）"}};
+
+var SCALE = [
+  {v:1, t:"非常不符合", e:"完全不是我"},
+  {v:2, t:"不符合",     e:"大多数时候不是"},
+  {v:3, t:"不确定",     e:"一半一半"},
+  {v:4, t:"符合",       e:"多数时候是"},
+  {v:5, t:"非常符合",   e:"就是我本人"}
+];
+var ans = {}, cur = 0;
+var $ = function(id){ return document.getElementById(id); };
+var show = function(id){
+  ["cover","quiz","loading","report"].forEach(function(s){ $("screen-"+s).classList.add("hidden"); });
+  $("screen-"+id).classList.remove("hidden");
+  window.scrollTo(0,0);
+};
+
+/* ---------- 封面 ---------- */
+(function initCover(){
+  var M = DB.meta;
+  $("c-badge").textContent = "职场人自救 · " + M.verShort;
+  $("c-title").textContent = "职业第二曲线，你到底该往哪拐？";
+  $("c-sub").textContent = "别急着裸辞，也别盲目报课 · " + DB.questions.length + " 题给你一张定位图";
+  ["#职业迷茫","#副业方向","#自我认知","#AI替代焦虑","#转型"].forEach(function(t){
+    var s = document.createElement("span"); s.textContent = t; $("c-tags").appendChild(s);
+  });
+  $("c-n1").textContent = DB.questions.length;
+  $("c-n2").textContent = M.timeShort;
+  $("c-theory").textContent = M.theory;
+  $("c-scale").textContent = M.scale;
+  $("c-aud").textContent = M.aud;
+  $("c-guide").textContent = M.guide;
+  DB.meta.reportSeven.forEach(function(t){
+    var s = document.createElement("span"); s.textContent = t; $("c-gets").appendChild(s);
+  });
+  $("c-foot").textContent = M.name + " · " + M.verShort + " · 匿名作答，不上传任何信息";
+})();
+
+/* ---------- 答题 ---------- */
+function renderQ(){
+  var q = DB.questions[cur];
+  $("q-progress").textContent = (cur+1) + " / " + DB.questions.length;
+  $("q-bar").style.width = ((cur+1)/DB.questions.length*100) + "%";
+  $("q-mod").textContent = q.module.replace(/^[A-D]\s*/,"");
+  $("q-index").textContent = "Q" + (cur+1);
+  $("q-fac").textContent = q.sub + " · 计入「" + (q.dim==="AI暴露度"?"AI替代暴露度":q.dim) + "」";
+  $("q-text").textContent = q.text;
+  var box = $("q-opts"); box.innerHTML = "";
+  SCALE.forEach(function(o){
+    var d = document.createElement("div");
+    d.className = "opt" + (ans[q.id]===o.v ? " on" : "");
+    d.innerHTML = "<span>"+o.t+"</span><i>"+o.e+"</i>";
+    d.onclick = function(){ ans[q.id] = o.v; save(); 
+      if(ans[q.id]) { setTimeout(next, 180); } };
+    box.appendChild(d);
+  });
+  $("btn-prev").style.visibility = cur===0 ? "hidden" : "visible";
+  $("btn-next").textContent = cur===DB.questions.length-1 ? "生成报告 ✨" : "下一题 →";
+}
+function save(){
+  try{ localStorage.setItem("cscl_answers", JSON.stringify(ans)); }catch(e){}
+}
+function next(){
+  if(cur < DB.questions.length-1){ cur++; renderQ(); } else { finish(); }
+}
+function prev(){ if(cur>0){ cur--; renderQ(); } }
+$("btn-start").onclick = function(){ cur=0; renderQ(); show("quiz"); };
+$("btn-prev").onclick = prev;
+$("btn-next").onclick = function(){
+  if(!ans[DB.questions[cur].id]){
+    var el=$("q-opts"); el.style.animation="none";
+    setTimeout(function(){ el.animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:260}); },10);
+    return;
+  }
+  next();
+};
+
+/* ---------- 计分（严格按 02/03 计分规则表） ---------- */
+function scoredValue(q){
+  var raw = ans[q.id];
+  return q.dir === "反向" ? (6 - raw) : raw;
+}
+function calcDims(){
+  var out = {};
+  DB.dimNames.forEach(function(d){
+    var qs = DB.questions.filter(function(q){ return q.dim === d; });
+    var n = qs.length;
+    var sum = qs.reduce(function(a,q){ return a + scoredValue(q); }, 0);
+    out[d] = { n:n, raw:sum, std:Math.round((sum - n)/(4*n)*100) };
+  });
+  return out;
+}
+function calcExpo(){
+  var qs = DB.questions.filter(function(q){ return q.dim === "AI暴露度"; });
+  var n = qs.length;
+  var sum = qs.reduce(function(a,q){ return a + scoredValue(q); }, 0);
+  return { n:n, raw:sum, idx:Math.round((sum - n)/(4*n)*100) };
+}
+function bandOf(v){
+  for(var i=0;i<DB.bands.length;i++){ if(v>=DB.bands[i].lo && v<=DB.bands[i].hi) return DB.bands[i].name; }
+  return "";
+}
+function expoLevelOf(v){
+  for(var i=0;i<DB.expoLevels.length;i++){
+    if(v>=DB.expoLevels[i].lo && v<=DB.expoLevels[i].hi) return DB.expoLevels[i];
+  }
+  return DB.expoLevels[DB.expoLevels.length-1];
+}
+/* 条件表达式求值：解析 05/06 表里的「启用前提」「触发条件」文本 */
+function evalCond(str, ctx){
+  var parts = str.split(/且|；|;/);
+  return parts.every(function(p){
+    p = p.replace(/\s/g,"");
+    var m = p.match(/^(执行|分析|创造|影响|连接|学习|稳定|韧性|暴露度)(≥|≤|>|<|=)(\d+)$/);
+    if(!m) return false;
+    var v = (m[1] === "暴露度") ? ctx.expo : ctx.dims[m[1]].std;
+    if(m[2]==="≥"||m[2]===">") return v >= +m[3];
+    if(m[2]==="≤"||m[2]==="<") return v <= +m[3];
+    return v === +m[3];
+  });
+}
+function pickTracks(dims, expo){
+  var ctx = {dims:dims, expo:expo};
+  var rank = DB.dimNames.slice();           // 并列时按 执行>分析>…>韧性
+  var sorted = DB.dimNames.slice().sort(function(a,b){
+    if(dims[b].std !== dims[a].std) return dims[b].std - dims[a].std;
+    return rank.indexOf(a) - rank.indexOf(b);
+  });
+  var top3 = sorted.slice(0,3);
+  /* 05 表③：暴露度 ≥70 优先保留含人际信任/创造/复杂判断属性的赛道，剔除纯标准化
+     操作型；≤24 加重专业手艺型（执行/稳定），弱化管理转型型（影响） */
+  var SOFT = ["创造","连接","影响","分析"];
+  var HARD = ["执行","稳定","韧性"];
+  function rel(t){                     // 与用户 Top3 的贴合度 + 暴露度修正
+    var s = 0;
+    if(t.main===top3[0]) s += 100; if(t.sub===top3[0]) s += 40;
+    if(top3.indexOf(t.main)>0) s += 20; if(top3.indexOf(t.sub)>0) s += 10;
+    if(top3.indexOf(t.main)===-1 && top3.indexOf(t.sub)===-1) s -= 30;
+    s += (dims[t.main].std + dims[t.sub].std)/100;
+    var softHit = (SOFT.indexOf(t.main)>=0) + (SOFT.indexOf(t.sub)>=0);
+    var allHard = HARD.indexOf(t.main)>=0 && HARD.indexOf(t.sub)>=0;
+    if(expo >= 70){ s += softHit*25; if(allHard) s -= 45; }
+    else if(expo <= 24){
+      if(allHard) s += 15;
+      if(t.main==="影响" || t.sub==="影响") s -= 15;
+    }
+    return s;
+  }
+  var byRel = DB.tracks.slice().sort(function(a,b){ return rel(b) - rel(a); });
+  var pool = byRel.filter(function(t){ return evalCond(t.prereq, ctx); }).map(function(t){
+    return { t:t, met:true };
+  });
+  var fallback = false;
+  /* 满足启用前提的行不足 3 条时，按相关度补齐为「方向参考」行，并如实标注前提未满足 */
+  if(pool.length < 3){
+    var have = {}; pool.forEach(function(x){ have[x.t.main+x.t.sub] = 1; });
+    byRel.forEach(function(t){
+      if(pool.length >= 3) return;
+      if(have[t.main+t.sub]) return;
+      pool.push({ t:t, met:false });
+      have[t.main+t.sub] = 1;
+    });
+    if(pool.length < 3){ fallback = true; }
+    else if(pool.some(function(x){ return !x.met; })) { fallback = true; }
+  }
+  var list = pool.slice(0,3);
+  return { list: list, sorted: sorted, top3: top3, fallback: fallback,
+           ruleNote: expo >= 70 ? "expoHigh" : (expo <= 24 ? "expoLow" : ""),
+           holland: hollandCode(), expo: expo, dims: dims };
+}
+/* 霍兰德三码：A 模块各型两题之和排序取前三 */
+function hollandCode(){
+  var g = {};
+  DB.questions.forEach(function(q){
+    if(q.module.charAt(0) !== "A") return;
+    var c = q.sub.charAt(0);
+    var v = (q.dir==="反向") ? 6-ans[q.id] : ans[q.id];
+    g[c] = (g[c]||0) + v;
+  });
+  return Object.keys(g).sort(function(a,b){
+    return (g[b]-g[a]) || ("RIASEC".indexOf(a) - "RIASEC".indexOf(b));
+  }).slice(0,3).map(function(c){ return {code:c, score:g[c], meaning:DB.holland[c]}; });
+}
+
+/* ---------- 报告渲染 ---------- */
+function finish(){
+  var missing = DB.questions.filter(function(q){ return !ans[q.id]; });
+  if(missing.length){
+    for(var i=0;i<DB.questions.length;i++){ if(!ans[DB.questions[i].id]){ cur=i; break; } }
+    renderQ(); show("quiz");
+    $("q-opts").animate([{transform:'translateY(-8px)'},{transform:'translateY(0)'}],{duration:280});
+    return;
+  }
+  show("loading");
+  setTimeout(function(){
+    const R = pickTracks(calcDims(), calcExpo().idx);
+    renderReport(R);
+    // 提交结果到Supabase云端
+    const resultPayload = {
+      dims: {},
+      expo: R.expo,
+      top3: R.top3,
+      holland: R.holland.map(h => h.code).join(""),
+      timestamp: Date.now()
+    };
+    for (const d of DB.dimNames) {
+      resultPayload.dims[d] = R.dims[d].std;
+    }
+    submitResult(resultPayload);
+  }, 700);
+}
+
+function renderReport(R){
+  var D = R.dims, expo = R.expo, L = expoLevelOf(expo);
+
+  /* 关键词 Top3 */
+  $("r-title").textContent = "你的第二曲线方向：「" + DB.keywords[R.sorted[0]].split("、")[0] + "」型";
+  $("r-sub").textContent = "优势 Top3：" + R.top3.join(" / ") + " · AI 替代暴露度 " + expo + " 分";
+  var kw = $("r-keywords"); kw.innerHTML = "";
+  R.top3.forEach(function(d){
+    var div = document.createElement("div"); div.className="chip";
+    div.innerHTML = "<b>"+DB.keywords[d].split("、")[0]+"</b><span>"+d+" · "+D[d].std+"分</span>";
+    kw.appendChild(div);
+  });
+
+  /* 雷达 */
+  $("r-radar").innerHTML = radarSVG(DB.dimNames.map(function(d){ return D[d].std; }));
+  var dl = $("r-dims"); dl.innerHTML = "";
+  DB.dimNames.forEach(function(d){
+    var row = document.createElement("div"); row.className="dimrow";
+    row.innerHTML = '<span class="dn">'+d+'</span><span class="track"><i></i></span>'+
+                    '<span class="ds">'+D[d].std+'</span><span class="db">'+bandOf(D[d].std)+'</span>';
+    dl.appendChild(row);
+    setTimeout(function(){ row.querySelector("i").style.width = D[d].std + "%"; }, 120);
+  });
+
+  /* 暴露度 */
+  $("r-expo").textContent = expo;
+  var g = $("r-gauge"); g.innerHTML = "";
+  DB.expoLevels.forEach(function(lv){
+    var u = document.createElement("u");
+    u.style.width = (lv.hi - lv.lo + 1) + "%";
+    u.style.background = lv.lo <= expo && expo <= lv.hi ? "#7C3AED" : "#EDE4FF";
+    g.appendChild(u);
+  });
+  $("r-gmark").textContent = "低 0 ─── " + expo + " ─── 高 100（" + L.label + "区间 " + L.lo + "–" + L.hi + "）";
+  $("r-expo-tag").textContent = L.tag + " · 暴露度" + L.label;
+  $("r-expo-text").textContent = L.text;
+  $("r-expo-act").textContent = "👉 " + L.action;
+
+  /* 赛道 */
+  var tw = $("r-tracks"); tw.innerHTML = "";
+  if(R.fallback){
+    $("r-track-note").textContent = "你的组合暂未命中标准映射行，以下按主维度优先给出（组合样本待积累）";
+  } else if(R.ruleNote === "expoHigh"){
+    $("r-track-note").textContent = "你的暴露度≥70，以下 Top3 已优先保留含人际信任／创造／复杂判断属性的方向，并剔除纯标准化操作型推荐";
+  } else if(R.ruleNote === "expoLow"){
+    $("r-track-note").textContent = "你的暴露度≤24（护城河较深），以下已加重专业手艺型深耕方向，弱化管理转型型推荐";
+  }
+  R.list.forEach(function(it, i){
+    var t = it.t;
+    var div = document.createElement("div"); div.className="track-card";
+    div.innerHTML = '<span class="rk">TOP '+(i+1)+'</span><h4>'+t.top3+'</h4>'+
+      '<p><b>岗位举例</b>　'+t.jobs+'</p><p><b>推荐理由</b>　'+t.reason+'</p>'+
+      (it.met
+        ? '<p style="color:var(--violet-d)"><b>启用前提</b>　'+t.prereq+'（已满足）</p>'
+        : '<p style="color:var(--gold)"><b>启用前提</b>　'+t.prereq+'（尚未满足，此条按能力方向参考给出）</p>');
+    tw.appendChild(div);
+  });
+  $("r-holland").innerHTML = "兴趣风格参考：三码 <b style='color:var(--violet-d)'>" +
+    R.holland.map(function(h){ return h.code; }).join(" ") + "</b> — " +
+    R.holland.map(function(h){ return h.code+"→"+h.meaning; }).join("　") +
+    "（雷达定赛道方向，兴趣码定岗位风格；冲突时以雷达为准）";
+
+  /* 不建议 */
+  var hits = DB.avoid.filter(function(a){ return evalCond(a.cond, {dims:D, expo:expo}); });
+  var order = {"最高":0,"高":1,"中":2,"低":3};
+  hits.sort(function(a,b){
+    var x = (a.idx===4) ? -100 : 0, y = (b.idx===4) ? -100 : 0;
+    return (x + order[a.prio]) - (y + order[b.prio]);
+  });
+  var aw = $("r-avoid"); aw.innerHTML = "";
+  if(!hits.length){
+    aw.innerHTML = '<div class="safe">✅ 这一轮没有触发「现阶段不建议」——说明你当前的能力结构没有明显的高风险错配方向，可以放心按上面的赛道去试。</div>';
+  } else {
+    hits.slice(0,3).forEach(function(a){
+      var div = document.createElement("div"); div.className="avoid-card";
+      div.innerHTML = '<h4>'+a.dir+'<em>优先级 '+a.prio+'</em></h4>'+
+        '<p>'+a.reason+'</p><p class="alt">替代建议：'+a.alt+'</p>'+
+        '<p style="font-size:11.5px;opacity:.7">触发条件：'+a.cond+'</p>';
+      aw.appendChild(div);
+    });
+    if(hits.length>3){
+      aw.insertAdjacentHTML("beforeend",
+        '<p class="note">另有 '+(hits.length-3)+' 条同样命中，按优先级省略，完整清单可在复测时关注。</p>');
+    }
+  }
+
+  /* 行动清单 */
+  var letter = DB.dim2letter[R.sorted[0]];
+  var items = (DB.actions[letter]||[]).slice();
+  var urgent = expo >= 70;
+  if(urgent){
+    items.sort(function(a,b){
+      return (a.type.indexOf("降暴露")>=0 ? -1 : 0) - (b.type.indexOf("降暴露")>=0 ? -1 : 0);
+    });
+  }
+  var ac = $("r-actions"); ac.innerHTML = "";
+  items.forEach(function(it){
+    var isU = urgent && it.type.indexOf("降暴露")>=0;
+    var div = document.createElement("div"); div.className="act";
+    div.innerHTML = '<span class="ty'+(isU?' urg':'')+'">'+it.type+(isU?' · 紧迫':'')+'</span>'+
+      '<p>'+it.content+'</p>'+
+      '<div class="meta"><b>交付证据</b>　'+it.evidence+'<br><b>继续/放弃</b>　'+it.std+'</div>';
+    ac.appendChild(div);
+  });
+  $("r-hook").textContent = "第 90 天复测本测评，对比雷达与暴露度变化，再定下一轮动作。";
+  $("r-retest").textContent = DB.meta.retest;
+  $("r-disc").innerHTML = "<b>使用说明与免责声明</b>" + DB.meta.disclaimer +
+    "<br><br><b>话术边界</b>" + DB.meta.toneRule +
+    "<br><br><b>数据来源</b>" + DB.meta.name + " · " + DB.meta.ver +
+    "（" + DB.questions.length + " 题 · 计分严格按原表 02/03/05/06/07 规则）";
+  show("report");
+}
+
+/* SVG 雷达：8 轴，无外部依赖。维度名与分数合并为同一行文字，
+   避免左右水平轴上两段文字同 y 重叠并被画布裁切 */
+function radarSVG(vals){
+  var cx=180, cy=145, R=95, n=vals.length, i;
+  function pt(idx, r){
+    var a = -Math.PI/2 + idx*2*Math.PI/n;
+    return [cx + r*Math.cos(a), cy + r*Math.sin(a)];
+  }
+  var s = '<svg viewBox="0 0 360 290" style="width:100%;max-width:360px;height:auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="8维能力雷达图">';
+  [20,40,60,80,100].forEach(function(g){
+    var p=[]; for(i=0;i<n;i++){ p.push(pt(i, R*g/100).join(",")); }
+    s += '<polygon points="'+p.join(" ")+'" fill="'+(g===100?"#FFFFFF":"none")+'" stroke="#E4DAFB" stroke-width="1"/>';
+  });
+  for(i=0;i<n;i++){
+    var e = pt(i, R);
+    s += '<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="#E4DAFB" stroke-width="1"/>';
+  }
+  var dp=[]; for(i=0;i<n;i++){ dp.push(pt(i, R*Math.max(4,vals[i])/100).join(",")); }
+  s += '<polygon points="'+dp.join(" ")+'" fill="rgba(124,58,237,.22)" stroke="#7C3AED" stroke-width="2"/>';
+  for(i=0;i<n;i++){
+    var p2 = pt(i, R*Math.max(4,vals[i])/100);
+    s += '<circle cx="'+p2[0]+'" cy="'+p2[1]+'" r="3" fill="#6D28D9"/>';
+  }
+  var lab = DB.dimNames;
+  for(i=0;i<n;i++){
+    var lp = pt(i, R+20), anc = "middle";
+    if(lp[0] > cx+8) anc="start"; else if(lp[0] < cx-8) anc="end";
+    s += '<text x="'+lp[0]+'" y="'+(lp[1]+4)+'" font-size="12.5" text-anchor="'+anc+'">'+
+         '<tspan font-weight="700" fill="#5B21B6">'+lab[i]+'</tspan>'+
+         '<tspan fill="#A78BFA" font-size="11"> '+vals[i]+'</tspan></text>';
+  }
+  return s + '</svg>';
+}
+
+/* ---------- 重测 ---------- */
+$("btn-restart").onclick = function(){
+  ans = {}; cur = 0;
+  try{ localStorage.removeItem("cscl_answers"); }catch(e){}
+  show("cover");
+};
+
+/* 恢复上次未完成的作答 */
+try{
+  var saved = JSON.parse(localStorage.getItem("cscl_answers") || "{}");
+  if(saved && Object.keys(saved).length){ ans = saved; }
+}catch(e){}
+</script>
+
+<!-- Supabase 集成 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============ Supabase 配置区（部署时请替换为你自己的密钥） ============ */
+/* 第 1 步：在 supabase.com 注册后，进入 Settings → API 获取这两个值 */
+const SUPABASE_URL = "YOUR_SUPABASE_URL";       // 形如 https://xxxx.supabase.co
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";  // 以 eyJ 开头的 anon public key
+/* ===================================================================== */
+
+let supabase = null;
+
+function initSupabase() {
+  if (SUPABASE_URL === "YOUR_SUPABASE_URL" || !SUPABASE_URL.startsWith("http")) {
+    console.log("⚠️ Supabase 未配置，测评结果仅保存在本地（不影响使用）");
+    return false;
+  }
+  try {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false }
+    });
+    console.log("✅ Supabase 数据库连接成功");
+    return true;
+  } catch(e) {
+    console.warn("Supabase 初始化失败:", e);
+    return false;
+  }
+}
+
+const sbReady = initSupabase();
+
+/* 记录一次页面访问（PV统计） */
+async function recordVisit() {
+  if (!supabase) return;
+  try {
+    // 先尝试更新计数
+    const { data, error } = await supabase.rpc("increment_visit");
+    if (error) {
+      // RPC不存在则插入一行简单记录
+      await supabase.from("site_stats").select("*").limit(1);
+    }
+  } catch(e) {}
+}
+
+/* 提交测评结果到数据库 */
+async function submitResult(resultData) {
+  if (!supabase) {
+    console.log("Supabase 未配置，结果仅本地保存");
+    return { ok: false, reason: "not_configured" };
+  }
+  try {
+    const { data, error } = await supabase.from("quiz_results").insert([{
+      result_data: resultData,
+      submitted_at: new Date().toISOString(),
+      user_agent: navigator.userAgent.slice(0, 200)
+    }]);
+    if (error) {
+      console.warn("数据提交失败:", error.message);
+      return { ok: false, reason: error.message };
+    }
+    console.log("✅ 测评结果已保存到云端");
+    return { ok: true };
+  } catch(e) {
+    console.warn("提交异常:", e);
+    return { ok: false, reason: String(e) };
+  }
+}
+
+/* 页面加载时记录访问 */
+recordVisit();
+</script>
+</body>
+</html>
